@@ -341,8 +341,7 @@ namespace NzbDrone.Core.Download.Clients.QBittorrent
         {
             var requestBuilder = new HttpRequestBuilder(settings.UseSsl, settings.Host, settings.Port, settings.UrlBase)
             {
-                LogResponseContent = true,
-                StoreRequestCookie = false
+                LogResponseContent = true
             };
 
             if (settings.ApiKey.IsNotNullOrWhiteSpace())

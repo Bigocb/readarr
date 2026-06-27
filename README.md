@@ -11,6 +11,17 @@ Note that only one type of a given book is supported. If you want both an audiob
 
 This project is a personal fork of the original Readarr project, which was retired by the Servarr team. This fork is maintained for personal use and development purposes only. This fork is in no way affiliated with, endorsed by, or related to the Servarr team.
 
+## Fork Changes
+
+### qBittorrent API Key Authentication (backported from Sonarr/Radarr)
+
+qBittorrent v5.2.0+ uses API key authentication instead of username/password cookies. This fork adds API key support:
+
+- **qBittorrentSettings** — New `ApiKey` field (FieldDefinition 4), shifts Username→5, Password→6. Validator enforces username/password must be empty when API key is set.
+- **QBittorrentProxyV2** — Sends `Authorization: Bearer {apiKey}` header when API key is configured; skips cookie-based login entirely. Also fixes HTTP 204 response handling (`response.Content != "Ok."` now checks for null/empty content first) which previously broke all requests against qBittorrent 5.2.0+.
+- **QBittorrentProxyV1** — Same API key support as V2 for older clients.
+- **QBittorrent.cs** — Auth failure error message points to the correct field (ApiKey vs Username).
+
 ## Major Features Include
 
 * Can watch for better quality of the ebooks and audiobooks you have and do an automatic upgrade. *e.g. from PDF to AZW3*
